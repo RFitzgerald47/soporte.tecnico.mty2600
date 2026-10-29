@@ -456,13 +456,30 @@ window.addEventListener("popstate", () => {
     }
 });
 
-// El logotipo siempre regresa al inicio, incluso si ya estamos en la página principal.
-document.querySelectorAll(".brand, .footer-brand").forEach((brandLink) => {
-    brandLink.addEventListener("click", (event) => {
+// El logotipo de la CABECERA siempre sube al inicio de la página principal.
+// En una ficha de servicio, primero la cerramos; en la página principal,
+// desplazamos directamente la ventana hasta el principio del documento.
+const headerBrandLink = document.querySelector(".header .brand");
+if (headerBrandLink) {
+    headerBrandLink.addEventListener("click", (event) => {
         event.preventDefault();
-        navigateToMainSection("inicio");
+
+        if (document.body.classList.contains("service-detail-mode")) {
+            closeServiceDetails({ targetId: "inicio", behavior: "smooth" });
+        } else {
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        }
     });
-});
+}
+
+// El logotipo del pie conserva su navegación normal hacia el encabezado.
+const footerBrandLink = document.querySelector(".footer-brand");
+if (footerBrandLink) {
+    footerBrandLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    });
+}
 
 // Escape cierra la ficha cuando está abierta.
 document.addEventListener("keydown", (event) => {
