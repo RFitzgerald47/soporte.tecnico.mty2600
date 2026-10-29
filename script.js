@@ -393,11 +393,7 @@ document.querySelectorAll(".service-card").forEach((card) => {
     });
 });
 
-/* 7. Función única para cerrar la ficha y restaurar el catálogo. */
-/**
- * Cierra la ficha del servicio activo y devuelve al usuario al catálogo.
- * Restaura el desplazamiento normal de la página y quita la clase de modo detalle.
- */
+/* 7. Navegación principal y cierre consistente de las fichas de servicio. */
 function restoreMainPage({ targetId = "servicios", behavior = "smooth", restorePreviousScroll = false } = {}) {
     if (!detailSection) return;
 
@@ -411,83 +407,71 @@ function restoreMainPage({ targetId = "servicios", behavior = "smooth", restoreP
     }
 
     if (targetId) {
-        // Esperar a que el modo detalle se quite para que el destino vuelva a ser visible.
-        requestAnimationFrame(() => {
-            document.getElementById(targetId)?.scrollIntoView({ behavior, block: "start" });
-        });
+        // Esperar a que el navegador aplique la visibilidad normal antes de desplazar.
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            const target = document.getElementById(targetId);
+            if (target) target.scrollIntoView({ behavior, block: "start" });
+        }));
     }
 }
 
-/**
- * Cierra la ficha. Cuando se usa la flecha Atrás del navegador, popstate se encarga
- * de restaurar la página; en los botones de la página podemos elegir el destino.
- */
 function closeServiceDetails(options = {}) {
     if (!detailSection || detailSection.hidden) return;
+    if (history.state?.serviceDetailMode) {
+        // Evita que el botón de navegación deje el historial en estado de ficha abierta.
+        history.replaceState({ ...(history.state || {}), serviceDetailMode: false }, "", window.location.href);
+    }
     restoreMainPage(options);
 }
 
-// El botón «Cerrar ficha» devuelve al catálogo de servicios.
+function navigateToMainSection(targetId, behavior = "smooth") {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    if (document.body.classList.contains("service-detail-mode")) {
+        closeServiceDetails({ targetId, behavior });
+    } else {
+        target.scrollIntoView({ behavior, block: "start" });
+    }
+}
+
+// «Cerrar ficha» regresa al catálogo sin abandonar la página.
 if (closeDetailButton) {
     closeDetailButton.addEventListener("click", () => {
-        if (history.state?.serviceDetailMode) {
-            history.back();
-        } else {
-            closeServiceDetails({ targetId: "servicios" });
-        }
+        closeServiceDetails({ targetId: "servicios" });
     });
 }
 
-// La flecha «← Inicio» dentro de la barra de la ficha siempre vuelve al inicio.
+// La flecha «← Inicio» cierra la ficha y vuelve al encabezado de la página principal.
 if (detailHomeButton) {
     detailHomeButton.addEventListener("click", () => {
-        if (history.state?.serviceDetailMode) {
-            history.replaceState({ ...(history.state || {}), serviceDetailMode: false }, "", window.location.href);
-        }
-        closeServiceDetails({ targetId: "presentacion" });
+        closeServiceDetails({ targetId: "inicio" });
     });
 }
 
 // La flecha Atrás del navegador cierra la ficha sin abandonar el sitio.
-window.addEventListener("popstate", (event) => {
+window.addEventListener("popstate", () => {
     if (document.body.classList.contains("service-detail-mode")) {
         restoreMainPage({ restorePreviousScroll: true });
     }
 });
 
-// El logotipo siempre lleva a la parte superior de la página principal,
-// tanto si el usuario está en la página principal como si tiene una ficha abierta.
-const brandLink = document.querySelector(".brand");
-if (brandLink) {
+// El logotipo siempre regresa al inicio, incluso si ya estamos en la página principal.
+document.querySelectorAll(".brand, .footer-brand").forEach((brandLink) => {
     brandLink.addEventListener("click", (event) => {
         event.preventDefault();
-
-        const detailIsOpen = document.body.classList.contains("service-detail-mode");
-        if (detailIsOpen && history.state?.serviceDetailMode) {
-            history.replaceState(
-                { ...(history.state || {}), serviceDetailMode: false },
-                "",
-                window.location.href
-            );
-        }
-
-        if (detailIsOpen) {
-            closeServiceDetails({ targetId: "inicio" });
-        } else {
-            // En la página principal, el clic en el logotipo también sube al encabezado.
-            document.getElementById("inicio")?.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        navigateToMainSection("inicio");
     });
-}
+});
 
-/* 8. Escape (Esc) cierra la ficha solo cuando está abierta. */
+// Escape cierra la ficha cuando está abierta.
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && document.body.classList.contains("service-detail-mode")) {
         closeServiceDetails({ targetId: "servicios" });
     }
 });
 
-/* 9. Menú adaptable: alterna la clase open y actualiza aria-expanded para accesibilidad. */
+// Menú adaptable y navegación desde la página principal o desde cualquier ficha.
 if (menuToggle && navigation) {
     menuToggle.addEventListener("click", () => {
         const isOpen = navigation.classList.toggle("open");
@@ -495,25 +479,29 @@ if (menuToggle && navigation) {
         menuToggle.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
     });
 
-    // En móvil, al elegir un enlace se cierra el menú para dejar visible el contenido.
-    navigation.querySelectorAll("a").forEach((link) => {
+    navigation.querySelectorAll('a[href^="#"]').forEach((link) => {
         link.addEventListener("click", (event) => {
+            const targetId = link.getAttribute("href").slice(1);
+            if (!document.getElementById(targetId)) return;
+
+            event.preventDefault();
             navigation.classList.remove("open");
             menuToggle.setAttribute("aria-expanded", "false");
             menuToggle.setAttribute("aria-label", "Abrir menú");
-
-            // Dentro de una ficha, la navegación debe regresar primero a la página principal.
-            const targetId = link.getAttribute("href")?.slice(1);
-            if (document.body.classList.contains("service-detail-mode") && targetId) {
-                event.preventDefault();
-                if (history.state?.serviceDetailMode) {
-                    history.replaceState({ ...(history.state || {}), serviceDetailMode: false }, "", window.location.href);
-                }
-                closeServiceDetails({ targetId });
-            }
+            navigateToMainSection(targetId);
         });
     });
 }
+
+// Los enlaces internos del pie también funcionan si se activan mientras hay una ficha abierta.
+document.querySelectorAll('.footer-nav a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+        const targetId = link.getAttribute("href").slice(1);
+        if (!document.getElementById(targetId)) return;
+        event.preventDefault();
+        navigateToMainSection(targetId);
+    });
+});
 
 /* 10. FORMULARIO DE CONTACTO.
    No guarda información en una base de datos ni la envía a un servidor propio.
