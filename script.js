@@ -210,6 +210,8 @@ const navigation = document.getElementById("navigation");
 const detailSection = document.getElementById("detalle-servicio");
 const detailContent = document.getElementById("serviceDetailContent");
 const closeDetailButton = document.getElementById("closeDetail");
+const detailHomeButton = document.getElementById("detailHome");
+let serviceDetailReturnScrollY = 0;
 const contactForm = document.getElementById("contactForm");
 const formStatus = document.getElementById("formStatus");
 const backTopButton = document.getElementById("backTop");
@@ -323,6 +325,23 @@ function showServiceDetails(serviceId) {
     layout.append(copy, gallery);
     detailContent.appendChild(layout);
 
+    // Registrar la posición previa y crear una entrada de historial para que
+    // la flecha Atrás del navegador cierre la ficha y vuelva a la página principal.
+    if (!document.body.classList.contains("service-detail-mode")) {
+        serviceDetailReturnScrollY = window.scrollY;
+        history.pushState(
+            { ...(history.state || {}), serviceDetailMode: true, serviceId },
+            "",
+            window.location.href
+        );
+    } else if (history.state?.serviceDetailMode) {
+        history.replaceState(
+            { ...(history.state || {}), serviceDetailMode: true, serviceId },
+            "",
+            window.location.href
+        );
+    }
+
     // Mostrar la sección y desplazarla a la vista para que el usuario note el cambio.
     detailSection.hidden = false;
     // Activa una vista exclusiva: el catálogo, menú, pie y demás secciones desaparecen.
@@ -379,27 +398,80 @@ document.querySelectorAll(".service-card").forEach((card) => {
  * Cierra la ficha del servicio activo y devuelve al usuario al catálogo.
  * Restaura el desplazamiento normal de la página y quita la clase de modo detalle.
  */
-function closeServiceDetails() {
-    if (!detailSection || detailSection.hidden) return;
+function restoreMainPage({ targetId = "servicios", behavior = "smooth", restorePreviousScroll = false } = {}) {
+    if (!detailSection) return;
 
     detailSection.hidden = true;
     document.body.classList.remove("service-detail-mode");
     document.body.style.overflow = "";
-    document.getElementById("servicios")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
+
+    if (restorePreviousScroll) {
+        window.scrollTo({ top: serviceDetailReturnScrollY, behavior: "auto" });
+        return;
+    }
+
+    if (targetId) {
+        // Esperar a que el modo detalle se quite para que el destino vuelva a ser visible.
+        requestAnimationFrame(() => {
+            document.getElementById(targetId)?.scrollIntoView({ behavior, block: "start" });
+        });
+    }
+}
+
+/**
+ * Cierra la ficha. Cuando se usa la flecha Atrás del navegador, popstate se encarga
+ * de restaurar la página; en los botones de la página podemos elegir el destino.
+ */
+function closeServiceDetails(options = {}) {
+    if (!detailSection || detailSection.hidden) return;
+    restoreMainPage(options);
+}
+
+// El botón «Cerrar ficha» devuelve al catálogo de servicios.
+if (closeDetailButton) {
+    closeDetailButton.addEventListener("click", () => {
+        if (history.state?.serviceDetailMode) {
+            history.back();
+        } else {
+            closeServiceDetails({ targetId: "servicios" });
+        }
     });
 }
 
-// El botón «Cerrar ficha» utiliza la misma función que la tecla Escape.
-if (closeDetailButton) {
-    closeDetailButton.addEventListener("click", closeServiceDetails);
+// La flecha «← Inicio» dentro de la barra de la ficha siempre vuelve al inicio.
+if (detailHomeButton) {
+    detailHomeButton.addEventListener("click", () => {
+        if (history.state?.serviceDetailMode) {
+            history.replaceState({ ...(history.state || {}), serviceDetailMode: false }, "", window.location.href);
+        }
+        closeServiceDetails({ targetId: "presentacion" });
+    });
+}
+
+// La flecha Atrás del navegador cierra la ficha sin abandonar el sitio.
+window.addEventListener("popstate", (event) => {
+    if (document.body.classList.contains("service-detail-mode")) {
+        restoreMainPage({ restorePreviousScroll: true });
+    }
+});
+
+// El logotipo siempre lleva a Presentación, incluso si hay una ficha abierta.
+const brandLink = document.querySelector(".brand");
+if (brandLink) {
+    brandLink.addEventListener("click", (event) => {
+        if (!document.body.classList.contains("service-detail-mode")) return;
+        event.preventDefault();
+        if (history.state?.serviceDetailMode) {
+            history.replaceState({ ...(history.state || {}), serviceDetailMode: false }, "", window.location.href);
+        }
+        closeServiceDetails({ targetId: "presentacion" });
+    });
 }
 
 /* 8. Escape (Esc) cierra la ficha solo cuando está abierta. */
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && document.body.classList.contains("service-detail-mode")) {
-        closeServiceDetails();
+        closeServiceDetails({ targetId: "servicios" });
     }
 });
 
@@ -413,10 +485,20 @@ if (menuToggle && navigation) {
 
     // En móvil, al elegir un enlace se cierra el menú para dejar visible el contenido.
     navigation.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
+        link.addEventListener("click", (event) => {
             navigation.classList.remove("open");
             menuToggle.setAttribute("aria-expanded", "false");
             menuToggle.setAttribute("aria-label", "Abrir menú");
+
+            // Dentro de una ficha, la navegación debe regresar primero a la página principal.
+            const targetId = link.getAttribute("href")?.slice(1);
+            if (document.body.classList.contains("service-detail-mode") && targetId) {
+                event.preventDefault();
+                if (history.state?.serviceDetailMode) {
+                    history.replaceState({ ...(history.state || {}), serviceDetailMode: false }, "", window.location.href);
+                }
+                closeServiceDetails({ targetId });
+            }
         });
     });
 }

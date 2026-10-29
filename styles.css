@@ -2083,3 +2083,77 @@ body.service-detail-mode #detalle-servicio .detail-gallery img:first-child {
         aspect-ratio: 6 / 5 !important;
     }
 }
+
+/* ======================================================================
+   CORRECCIÓN DOCUMENTADA: FRANJA BLANCA SOBRE LA CABECERA EN MÓVILES
+   ----------------------------------------------------------------------
+   Problema observado:
+   - En el bloque responsive de alrededor de las líneas 1830-1836 se reserva
+     espacio arriba del documento con body { padding-top: var(--header-height) }
+     y se define --header-height: 154px.
+   - En otras reglas responsive anteriores, la posición de .header puede quedar
+     como sticky o depender de reglas previas. Si la cabecera no está anclada
+     al borde superior, el espacio reservado se ve como una franja vacía.
+
+   Solución:
+   - En pantallas de hasta 760px, fijar explícitamente .header en top: 0.
+   - Mantener el padding-top del body para que el contenido no quede debajo
+     de la cabecera fija. Se conserva la variable de altura existente (154px).
+   - No cambiar reglas de escritorio: este bloque solo se activa <= 760px.
+
+   Mantenimiento:
+   - Este bloque se deja al FINAL para prevalecer sobre reglas móviles
+     anteriores. Si cambia la altura real de la cabecera, revisar --header-height
+     y ajustar la reserva del body de forma coordinada.
+   ====================================================================== */
+@media (max-width: 760px) {
+    .header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        z-index: 10000 !important;
+    }
+
+    body {
+        padding-top: var(--header-height) !important;
+    }
+}
+
+
+/* Navegación de regreso en la barra superior de las fichas de servicio. */
+.detail-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 42px;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgba(56, 168, 255, 0.45);
+    border-radius: 10px;
+    background: rgba(7, 22, 41, 0.96);
+    color: #f4f8ff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+.detail-home:hover,
+.detail-home:focus-visible {
+    background: #12304d;
+    outline: 2px solid #38a8ff;
+    outline-offset: 2px;
+}
+body.service-detail-mode #detalle-servicio .detail-topline {
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+@media (max-width: 600px) {
+    body.service-detail-mode #detalle-servicio .detail-topline {
+        align-items: center;
+    }
+    body.service-detail-mode #detalle-servicio .detail-topline .eyebrow {
+        flex: 1 1 100%;
+        order: 3;
+    }
+}
