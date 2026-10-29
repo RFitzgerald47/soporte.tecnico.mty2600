@@ -1,0 +1,20 @@
+SOPORTE TÉCNICO MTY 2600 — PAQUETE PARA REVISIÓN
+
+Este paquete contiene el sitio completo y sus recursos locales.
+
+IMPORTANTE:
+- Conserva la estructura de carpetas tal como está dentro del ZIP.
+- Deben estar index.html, styles.css, script.js y los archivos de imágenes en la raíz del sitio.
+- No subas únicamente index.html: incluye también la carpeta assets completa.
+- assets/service-images contiene 36 fotografías de las galerías.
+- assets/fallbacks contiene 36 ilustraciones SVG de respaldo.
+- .nojekyll ayuda a que GitHub Pages sirva los recursos estáticos sin procesamiento de Jekyll.
+
+Para publicar en el repositorio:
+1. Descomprime este archivo en tu computadora.
+2. Sube el contenido completo al directorio raíz del repositorio GitHub Pages, incluyendo la carpeta assets.
+3. Confirma que el repositorio sea RFitzgerald47/soporte.tecnico.mty2600.
+4. Espera a que termine la publicación de GitHub Pages antes de revisar el sitio.
+
+Sitio publicado:
+https://rfitzgerald47.github.io/soporte.tecnico.mty2600/

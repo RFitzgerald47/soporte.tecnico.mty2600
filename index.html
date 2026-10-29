@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración básica del documento y adaptación a móviles. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#071629">
+    <meta name="description" content="Soporte Técnico MTY 2600: soporte informático, redes, desarrollo web y seguridad electrónica.">
+    <title>Soporte Técnico MTY 2600 | Soluciones tecnológicas</title>
+
+    <!-- Tipografía web. Si se trabaja sin internet, se utilizará la fuente alternativa del CSS. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Hoja de estilos y JavaScript separados para facilitar el mantenimiento. -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Enlace de accesibilidad: permite saltar el menú e ir directamente al contenido. -->
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <!-- Encabezado fijo con identidad del negocio, navegación y medios de contacto. -->
+    <header class="header" id="inicio">
+        <div class="container header-inner">
+            <a class="brand" href="#inicio" aria-label="Soporte Técnico MTY 2600 - Inicio">
+                <!-- Logotipo oficial proporcionado por el cliente. -->
+                <img src="logo-soporte-mty2600.png" alt="Logotipo Soporte Técnico MTY 2600"
+                     onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
+                <span class="brand-fallback" hidden>ST <b>MTY 2600</b></span>
+            </a>
+
+            <!-- Botón que abre/cierra la navegación en pantallas pequeñas. -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú"
+                    aria-expanded="false" aria-controls="navigation" type="button">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="navigation" id="navigation" aria-label="Menú principal">
+                <a class="nav-link active" href="#presentacion">Presentación</a>
+                <a class="nav-link" href="#servicios">Servicios</a>
+                <a class="nav-link" href="#nosotros">Nosotros</a>
+                <a class="nav-cta" href="#contacto">✉ Contacto</a>
+            </nav>
+
+            <!--
+                CONTACTO RÁPIDO DE LA CABECERA.
+                Orden visual aprobado: teléfono -> iconos de contacto -> correo a la derecha.
+                Para cambiar los datos, edita el texto visible y conserva los destinos tel:, wa.me y mailto:.
+            -->
+            <div class="header-links" aria-label="Contacto rápido">
+                <!-- Teléfono visible una sola vez; tel: permite llamar desde dispositivos compatibles. -->
+                <a class="header-phone" href="tel:+528120217154" aria-label="Llamar al 812.021.71.54">
+                    <span class="phone-symbol" aria-hidden="true">☎</span><span>812.021.71.54</span>
+                </a>
+                <!-- Accesos circulares, colocados después del número como en la referencia aprobada. -->
+                <a class="header-icon" href="https://wa.me/528120217154" target="_blank" rel="noopener noreferrer" aria-label="Abrir WhatsApp">◉</a>
+                <a class="header-icon" href="tel:+528120217154" aria-label="Llamar por teléfono">☎</a>
+                <a class="header-icon" href="mailto:soporte.tecnico2600@outlook.com" aria-label="Abrir correo electrónico">✉</a>
+                <!-- El correo queda al extremo derecho y se mantiene como enlace mailto:. -->
+                <a class="header-email" href="mailto:soporte.tecnico2600@outlook.com">
+                    <span class="email-symbol" aria-hidden="true">✉</span><span>soporte.tecnico2600@outlook.com</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main id="contenido">
+        <!-- Presentación principal: mensaje de marca y accesos rápidos a especialidades. -->
+        <section class="hero" id="presentacion">
+            <div class="hero-photo" aria-hidden="true"></div>
+            <div class="hero-shade" aria-hidden="true"></div>
+            <div class="container hero-content">
+                <div class="hero-copy">
+                    <p class="eyebrow"><span class="pulse-dot"></span> COMPUTER · TECHNOLOGY · NETWORK</p>
+                    <h1>Tecnología confiable.<br>Soluciones que te <span>conectan.</span></h1>
+                    <p class="hero-text">Soporte técnico para computadoras y laptops, redes, desarrollo web y seguridad electrónica. Acompañamos a hogares, profesionales y empresas con soluciones claras y funcionales.</p>
+                    <div class="hero-buttons">
+                        <a class="button button-primary" href="#servicios">Explorar servicios <span aria-hidden="true">→</span></a>
+                        <a class="button button-ghost" href="#contacto">Solicitar información</a>
+                    </div>
+                    <div class="hero-assurance"><span class="check-ring">✓</span> Atención personalizada · Soluciones a tu medida</div>
+                </div>
+
+                <aside class="hero-panel" aria-label="Áreas de servicio">
+                    <span class="panel-kicker">ESPECIALIDADES</span>
+                    <a href="#computo"><span class="panel-icon">◈</span><span>Computadoras y laptops</span><b>›</b></a>
+                    <a href="#redes"><span class="panel-icon">◈</span><span>Redes y conectividad</span><b>›</b></a>
+                    <a href="#seguridad"><span class="panel-icon">◈</span><span>Seguridad electrónica</span><b>›</b></a>
+                    <a href="#web"><span class="panel-icon">⌘</span><span>Desarrollo web y hosting</span><b>›</b></a>
+                </aside>
+            </div>
+            <div class="hero-bottom"></div>
+        </section>
+
+        <!-- Franja de confianza: resume cuatro áreas de trabajo. -->
+        <section class="trust-strip" aria-label="Servicios principales">
+            <div class="container trust-grid">
+                <a href="#computo" class="trust-item"><span class="trust-icon">✦</span><span><strong>Soporte técnico</strong><small>Hardware, software y sistemas</small></span></a>
+                <a href="#redes" class="trust-item"><span class="trust-icon">✦</span><span><strong>Redes y periféricos</strong><small>Instalación y configuración</small></span></a>
+                <a href="#seguridad" class="trust-item"><span class="trust-icon">✦</span><span><strong>Seguridad electrónica</strong><small>Accesos, videoporteros y CCTV</small></span></a>
+                <a href="#web" class="trust-item"><span class="trust-icon">⌘</span><span><strong>Soluciones digitales</strong><small>Web fullstack y hosting</small></span></a>
+            </div>
+        </section>
+
+        <!-- Presentación del negocio y sus principios de atención. -->
+        <section class="about" id="nosotros">
+            <div class="about-photo" role="img" aria-label="Técnico especializado trabajando en un equipo informático"></div>
+            <div class="about-main">
+                <div class="about-copy reveal">
+                    <p class="eyebrow blue">SOBRE NOSOTROS</p>
+                    <h2>Experiencia técnica. Trato cercano. Soluciones reales.</h2>
+                    <p>En Soporte Técnico MTY 2600 combinamos soporte informático, infraestructura, desarrollo digital y seguridad electrónica para atender las necesidades de hogares, profesionales y empresas.</p>
+                    <p>Explicamos las opciones con claridad y buscamos una solución adecuada para el equipo, el espacio y el objetivo de cada cliente.</p>
+                </div>
+                <ul class="benefits reveal">
+                    <li><span>✓</span> Atención personalizada y comunicación clara.</li>
+                    <li><span>✓</span> Soporte para equipos y sistemas diversos.</li>
+                    <li><span>✓</span> Integración de servicios tecnológicos.</li>
+                    <li><span>✓</span> Enfoque práctico en funcionalidad y continuidad.</li>
+                </ul>
+                <div class="why-box reveal">
+                    <h3>¿Por qué trabajar con nosotros?</h3>
+                    <div class="why-grid">
+                        <div><span class="why-icon">✦</span><strong>Atención cercana</strong><p>Escuchamos tus necesidades y explicamos el proceso.</p></div>
+                        <div><span class="why-icon">✦</span><strong>Soluciones integrales</strong><p>Computación, redes, web y seguridad electrónica.</p></div>
+                        <div><span class="why-icon">✦</span><strong>Enfoque profesional</strong><p>Orden, transparencia y soluciones orientadas a tu proyecto.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Catálogo de nueve servicios. Cada tarjeta abre su propia ficha detallada con JavaScript. -->
+        <section class="services section" id="servicios">
+            <div class="container services-layout">
+                <div class="section-intro reveal">
+                    <p class="eyebrow blue">SERVICIOS PROFESIONALES</p>
+                    <h2>La tecnología debe trabajar para ti.</h2>
+                    <span class="accent"></span>
+                    <p>Selecciona cualquiera de los servicios para conocer su alcance, ejemplos de trabajos y opciones de atención.</p>
+                    <a class="button button-primary" href="#contacto">Cuéntanos qué necesitas <span aria-hidden="true">→</span></a>
+                    <div class="intro-note"><span class="intro-note-icon">✦</span><span><strong>Un solo aliado tecnológico</strong><small>Soporte, instalación y orientación en un mismo lugar.</small></span></div>
+                </div>
+
+                <div class="service-catalog">
+                    <p class="service-filter-heading">Explora nuestras especialidades</p>
+                    <div class="service-filters" role="group" aria-label="Filtrar servicios">
+                        <button class="service-filter" type="button" data-filter="todos" aria-pressed="true">Todos</button>
+                        <button class="service-filter" type="button" data-filter="computo" aria-pressed="false">Cómputo</button>
+                        <button class="service-filter" type="button" data-filter="software" aria-pressed="false">Software</button>
+                        <button class="service-filter" type="button" data-filter="redes" aria-pressed="false">Redes</button>
+                        <button class="service-filter" type="button" data-filter="desarrollo" aria-pressed="false">Desarrollo web</button>
+                        <button class="service-filter" type="button" data-filter="seguridad" aria-pressed="false">Seguridad</button>
+                        <button class="service-filter" type="button" data-filter="cfe" aria-pressed="false">CFE</button>
+                    </div>
+                    <div class="service-grid">
+                    <!-- data-service-id enlaza cada tarjeta con la ficha correspondiente en script.js. -->
+                    <article class="service-card reveal" id="computo" data-category="computo">
+                        <div class="service-image image-computer" role="img" aria-label="Computadora de escritorio y componentes"></div>
+                        <div class="service-body"><span class="service-number">01 / CÓMPUTO</span><h3>Computadoras y laptops</h3><p>Diagnóstico, reparación y mantenimiento preventivo y correctivo para equipos PC y portátiles.</p>
+                            <button class="text-link service-open" type="button" data-service-id="computo">Más información <span aria-hidden="true">→</span></button></div>
+                    </article>
+                    <article class="service-card reveal" data-category="computo">
+                        <div class="service-image image-hardware" role="img" aria-label="Componentes de hardware de computadora"></div>
+                        <div class="service-body"><span class="service-number">02 / HARDWARE</span><h3>Hardware y periféricos</h3><p>Instalación y actualización de componentes, impresoras, monitores y periféricos.</p>
+                            <button class="text-link service-open" type="button" data-service-id="hardware">Más información <span aria-hidden="true">→</span></button></div>
+                    </article>
+                    <article class="service-card reveal" data-category="software">
+                        <div class="service-image image-software" role="img" aria-label="Estación de trabajo con software y pantallas"></div>
+                        <div class="service-body"><span class="service-number">03 / SOFTWARE</span><h3>Sistemas operativos y software</h3><p>Instalación y configuración de sistemas operativos, aplicaciones y solución de errores.</p>
+                            <button class="text-link service-open" type="button" data-service-id="software">Más información <span aria-hidden="true">→</span></button></div>
+                    </article>
+                    <article class="service-card reveal" id="redes" data-category="redes">
+                        <div class="service-image image-network" role="img" aria-label="Switches, cableado y equipos de red"></div>
+                        <div class="service-body"><span class="service-number">04 / CONECTIVIDAD</span><h3>Redes y conectividad</h3><p>Configuración de routers, Wi-Fi, cableado estructurado y conectividad para hogares y negocios.</p>
+                            <button class="text-link service-open" type="button" data-service-id="redes">Más información <span aria-hidden="true">→</span></button></div>
+                    </article>
+                    <article class="service-card reveal" data-category="computo">
+                        <div class="service-image image-data" role="img" aria-label="Discos y almacenamiento digital"></div>
+                        <div class="service-body"><span class="service-number">05 / INFORMACIÓN</span><h3>Recuperación de datos</h3><p>Evaluación y orientación para recuperar archivos y proteger información importante.</p>
+                            <button class="text-link service-open" type="button" data-service-id="datos">Más información <span aria-hidden="true">→</span></button></div>
+                    </article>
+                    <article class="service-card reveal" id="web" data-category="desarrollo">
+                        <div class="service-image image-web" role="img" aria-label="Desarrollo de páginas web en una computadora"></div>
+                        <div class="service-body"><span class="service-number">06 / DESARROLLO</span><h3>Desarrollo Web y Hosting</h3><p>Creación de páginas web, desarrollo frontend y backend, puesta en línea y hosting.</p>
+                            <button class="text-link service-open" type="button" data-service-id="web">Más información <span aria-hidden="true">→</span></button></div>
+                    </article>
+                    <article class="service-card reveal" id="seguridad" data-category="seguridad">
+                        <div class="service-image image-access" role="img" aria-label="Sistema de acceso electrónico con lector de seguridad"></div>
+                        <div class="service-body"><span class="service-number">07 / CONTROL DE ACCESO</span><h3>Accesos magnéticos y videoporteros</h3><p>Instalación y configuración de cerraduras magnéticas, videoporteros y control de acceso.</p>
+                            <button class="text-link service-open" type="button" data-service-id="acceso">Más información <span aria-hidden="true">→</span></button></div>
+                    </article>
+                    <article class="service-card reveal" data-category="seguridad">
+                        <div class="service-image image-cctv" role="img" aria-label="Cámara de videovigilancia profesional"></div>
+                        <div class="service-body"><span class="service-number">08 / VIDEOVIGILANCIA</span><h3>Cámaras de seguridad CCTV</h3><p>Instalación de cámaras, grabadores y configuración de visualización remota.</p>
+                            <button class="text-link service-open" type="button" data-service-id="cctv">Más información <span aria-hidden="true">→</span></button></div>
+                    </article>
+                    <article class="service-card reveal" data-category="cfe">
+                        <div class="service-image image-energy" role="img" aria-label="Infraestructura eléctrica y equipos técnicos"></div>
+                        <div class="service-body"><span class="service-number">09 / GESTORÍA</span><h3>Trámites y gestoría ante CFE</h3><p>Orientación y apoyo en gestiones relacionadas con la Comisión Federal de Electricidad.</p>
+                            <button class="text-link service-open" type="button" data-service-id="cfe">Más información <span aria-hidden="true">→</span></button></div>
+                    </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección blanca de servicios especializados, para alternar fondos como en la vista aprobada. -->
+        <section class="specialized section" id="especializados">
+            <div class="container specialized-layout">
+                <div class="specialized-photo" role="img" aria-label="Instalación y organización de cableado de red informática"></div>
+                <div class="specialized-content">
+                    <p class="eyebrow blue">NUESTROS SERVICIOS</p>
+                    <h2>Servicios especializados</h2>
+                    <p>Ofrecemos soluciones integrales en tecnología, adaptadas a tus necesidades. Cada servicio está pensado para brindarte seguridad, rendimiento y continuidad.</p>
+                    <div class="specialized-items">
+                        <a href="#computo"><span class="specialized-icon">▣</span><span><strong>Computadoras y laptops</strong><small>Equipos y mantenimiento</small></span></a>
+                        <a href="#redes"><span class="specialized-icon">⌘</span><span><strong>Redes y conectividad</strong><small>Configuración y soporte</small></span></a>
+                        <a href="#seguridad"><span class="specialized-icon">⬡</span><span><strong>Seguridad electrónica</strong><small>Cámaras y control de acceso</small></span></a>
+                        <a href="#web"><span class="specialized-icon">⌨</span><span><strong>Desarrollo web</strong><small>Sitios web y hosting</small></span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel dinámico: JavaScript inserta aquí el detalle del servicio elegido. -->
+        <section class="service-detail-section" id="detalle-servicio" aria-labelledby="detailTitle" hidden>
+            <div class="container">
+                <div class="detail-topline">
+                    <p class="eyebrow blue">DETALLE DEL SERVICIO</p>
+                    <button class="detail-close" id="closeDetail" type="button">Cerrar ficha <span aria-hidden="true">×</span></button>
+                </div>
+                <div id="serviceDetailContent" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <!-- Llamada a la acción antes de la información de contacto. -->
+        <section class="contact-banner">
+            <div class="banner-photo" role="img" aria-label="Panorama urbano de Monterrey"></div>
+            <div class="banner-copy">
+                <p class="eyebrow blue">HAGAMOS EQUIPO</p>
+                <h2>¿Tienes un proyecto en mente?</h2>
+                <p>Cuéntanos qué necesitas. Te ayudaremos a identificar el siguiente paso.</p>
+                <a class="button button-primary" href="#contacto">Hablar con soporte técnico <span>→</span></a>
+            </div>
+        </section>
+
+        <!-- Datos de contacto y formulario que prepara un mensaje de WhatsApp. -->
+        <section class="contact section" id="contacto">
+            <div class="container contact-layout">
+                <div class="contact-info reveal">
+                    <p class="eyebrow blue">CONTACTO</p>
+                    <h2>Estamos listos para ayudarte.</h2>
+                    <p class="contact-description">Elige un medio de contacto o prepara una solicitud con los detalles de tu proyecto.</p>
+                    <a class="contact-method" href="mailto:soporte.tecnico2600@outlook.com"><span class="method-icon">✉</span><span><small>Correo electrónico</small><strong>soporte.tecnico2600@outlook.com</strong></span></a>
+                    <a class="contact-method" href="tel:+528120217154"><span class="method-icon">✉</span><span><small>Teléfono</small><strong>812 021 7154</strong></span></a>
+                    <a class="contact-method" href="https://wa.me/528120217154" target="_blank" rel="noopener noreferrer"><span class="method-icon">✉</span><span><small>WhatsApp</small><strong>Enviar mensaje directo →</strong></span></a>
+                    <p class="coverage"><span></span> Monterrey y área de cobertura por confirmar</p>
+                </div>
+
+                <form class="contact-form reveal" id="contactForm">
+                    <div class="form-heading"><div><p class="eyebrow blue">CUÉNTANOS TU IDEA</p><h3>Solicita información</h3></div><span class="form-mark">✦</span></div>
+                    <p class="form-intro">Completa los campos y prepara tu mensaje por WhatsApp.</p>
+                    <div class="form-grid">
+                        <div class="field"><label for="nombre">Nombre completo</label><input id="nombre" name="nombre" autocomplete="name" placeholder="Tu nombre" required></div>
+                        <div class="field"><label for="correo">Correo electrónico</label><input id="correo" name="correo" type="email" autocomplete="email" placeholder="nombre@correo.com" required></div>
+                        <div class="field field-wide"><label for="servicio">Servicio de interés</label>
+                            <select id="servicio" name="servicio" required>
+                                <option value="">Selecciona un servicio</option>
+                                <option>Computadoras y laptops</option><option>Hardware y periféricos</option>
+                                <option>Sistemas operativos y software</option><option>Redes y conectividad</option>
+                                <option>Recuperación de datos</option><option>Desarrollo Web y Hosting</option>
+                                <option>Accesos magnéticos y videoporteros</option><option>Cámaras de seguridad CCTV</option>
+                                <option>Trámites y gestoría ante CFE</option><option>Otro servicio / asesoría</option>
+                            </select>
+                        </div>
+                        <div class="field field-wide"><label for="mensaje">¿Cómo podemos ayudarte?</label><textarea id="mensaje" name="mensaje" rows="4" placeholder="Describe brevemente lo que necesitas..." required></textarea></div>
+                    </div>
+                    <button class="button button-primary submit-button" type="submit">Preparar solicitud en WhatsApp <span>→</span></button>
+                    <p class="form-note">WhatsApp se abrirá con el mensaje listo para revisar y enviar.</p>
+                    <p class="form-status" id="formStatus" aria-live="polite" role="status"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de página con navegación secundaria y año automático. -->
+    <footer class="footer">
+        <div class="container footer-main">
+            <a class="footer-brand" href="#inicio"><img src="logo-soporte-mty2600.png" alt="Soporte Técnico MTY 2600" onerror="this.style.display='none'; this.nextElementSibling.hidden=false;"><span class="brand-fallback" hidden>ST <b>MTY 2600</b></span></a>
+            <nav class="footer-nav" aria-label="Enlaces del pie de página"><a href="#presentacion">Presentación</a><a href="#servicios">Servicios</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a><a href="mailto:soporte.tecnico2600@outlook.com">Correo</a></nav>
+            <div class="footer-social"><a href="https://wa.me/528120217154" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">◉</a><a href="tel:+528120217154" aria-label="Teléfono">☎</a><a href="mailto:soporte.tecnico2600@outlook.com" aria-label="Correo">✉</a></div>
+        </div>
+        <div class="container footer-bottom"><span>© <span id="year"></span> Soporte Técnico MTY 2600. Todos los derechos reservados.</span><span>Computer · Technology · Network</span></div>
+    </footer>
+
+    <!-- Accesos persistentes: WhatsApp y retorno al inicio. -->
+    <a class="whatsapp-float" href="https://wa.me/528120217154" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp"><span>◉</span><span>WhatsApp</span></a>
+    <button class="back-top" id="backTop" type="button" aria-label="Volver al inicio">↑</button>
+</body>
+</html>
