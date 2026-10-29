@@ -455,16 +455,28 @@ window.addEventListener("popstate", (event) => {
     }
 });
 
-// El logotipo siempre lleva a Presentación, incluso si hay una ficha abierta.
+// El logotipo siempre lleva a la parte superior de la página principal,
+// tanto si el usuario está en la página principal como si tiene una ficha abierta.
 const brandLink = document.querySelector(".brand");
 if (brandLink) {
     brandLink.addEventListener("click", (event) => {
-        if (!document.body.classList.contains("service-detail-mode")) return;
         event.preventDefault();
-        if (history.state?.serviceDetailMode) {
-            history.replaceState({ ...(history.state || {}), serviceDetailMode: false }, "", window.location.href);
+
+        const detailIsOpen = document.body.classList.contains("service-detail-mode");
+        if (detailIsOpen && history.state?.serviceDetailMode) {
+            history.replaceState(
+                { ...(history.state || {}), serviceDetailMode: false },
+                "",
+                window.location.href
+            );
         }
-        closeServiceDetails({ targetId: "presentacion" });
+
+        if (detailIsOpen) {
+            closeServiceDetails({ targetId: "inicio" });
+        } else {
+            // En la página principal, el clic en el logotipo también sube al encabezado.
+            document.getElementById("inicio")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
     });
 }
 
